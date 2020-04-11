@@ -78,10 +78,10 @@ router.get("/search", (req, res, next) => {
     }, (err, data) => res.json(data)).limit(10)
 })
 
-router.get("/allDrugs", async (req, res) => {
-    const categoryName = req.body.categoryName
+router.get("/allDrugs/:categoryName", async (req, res) => {
+    const categoryName = req.params.categoryName.toLowerCase()
     try {
-        const drugs = await Drugs.find({ categoryName: categoryName.toLowerCase()})
+        const drugs = await Drugs.find({ categoryName: categoryName})
         if(drugs.length >= 1){
             return successMessage.OK(res, drugs)
         } else {
