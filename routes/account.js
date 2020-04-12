@@ -1,4 +1,6 @@
 const express = require('express');
+const _ = require('lodash');
+const { validateLoginData, validateSignUpData } = require('../util/validator')
 const router = express.Router();
 const { Account } = require('../model/account');
 const authGaurd = require('../util/authGaurd');
@@ -15,6 +17,12 @@ const web3 = new Web3(new HDWalletProvider(mnemonic, "https://ropsten.infura.io/
 const { successMessage, errorMessage } = require('../util/constants')
 
 router.post('/create', async (req, res) => {
+    const { errors, valid } = validateLoginData(
+        _.pick(req.body, ['email', 'password', "confirmPassword"]),
+    );
+    if (!valid) {
+        return errorMessage.BAD_REQUEST(res, errors)
+    }
     const {email, password, confirmPassword} = req.body
     try {
         //create an account
@@ -56,6 +64,12 @@ router.post('/create', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
+    const { errors, valid } = validateLoginData(
+    _.pick(req.body, ['email', 'password']),
+);
+if (!valid) {
+    return errorMessage.BAD_REQUEST(res, errors)
+}
     const {email, password} = req.body;
     try {
         const user = await Account.findOne({email})

@@ -3,7 +3,10 @@ const { OK, BAD_REQUEST, INTERNAL_SERVER_ERROR } = require('http-status-codes')
 const message = {
     success: 'success',
     error: 'error',
-    swr: 'something went wrong'
+    swr: 'something went wrong',
+    mustBeValidEmail: 'Must be a valid email address',
+    mustNotBeEmpty: 'Must not be Empty',
+    passwordMustMatch: 'Passwords must Match',
 }
 
 const errorMessage = {
@@ -31,6 +34,7 @@ const successMessage = {
 }
 
 module.exports = {
+    message,
     errorMessage,
     successMessage
 }
