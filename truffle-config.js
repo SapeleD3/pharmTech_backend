@@ -1,15 +1,20 @@
-require('dotenv').config()
-const HDWalletProvider = require("@truffle/hdwallet-provider");
-const mnemonic = process.env.MNEMONIC
+require('dotenv').config();
+
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const mnemonic = process.env.MNEMONIC;
+const infuraKey = process.env.INFURA_KEY;
 
 module.exports = {
   networks: {
     ropsten: {
-      provider: function() {
-        return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/b4f230692f4447d7ada5c87533509ce0")
+      provider: function () {
+        return new HDWalletProvider(
+          mnemonic,
+          `https://ropsten.infura.io/v3/${infuraKey}`
+        );
       },
-      network_id: 3
-    }
+      network_id: 3,
+    },
   },
   // Configure your compilers
   compilers: {
@@ -23,6 +28,6 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
-  }
-}
+    },
+  },
+};
